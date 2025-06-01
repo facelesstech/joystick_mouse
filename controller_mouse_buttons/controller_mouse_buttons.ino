@@ -32,18 +32,13 @@
 #include "Mouse.h"
 
 // set pin numbers for switch, joystick axes, and LED:
-//const int switchPin = 2;      // switch to turn on and off mouse control
-
-//const int mouseButton = 2;    // input pin for the mouse pushButton
-//const int mouseButtonRight = 3;    // input pin for the mouse pushButton
-
 const int xAxis = A0;         // joystick X axis
 const int yAxis = A1;         // joystick Y axis
 const int ledPin = 5;         // Mouse control LED
 
 // parameters for reading the joystick:
-int range = 12;               // output range of X or Y movement
-//int range = 8;               // output range of X or Y movement
+//int range = 12;               // output range of X or Y movement
+int range = 18;               // output range of X or Y movement
 int responseDelay = 5;        // response delay of the mouse, in ms
 int threshold = range / 4;    // resting threshold
 int center = range / 2;       // resting position value
@@ -81,19 +76,6 @@ void setup()
 }
 
 void loop() {
-  // read the switch:
-//  int switchState = digitalRead(switchPin);
-//  // if it's changed and it's high, toggle the mouse state:
-//  if (switchState != lastSwitchState) {
-//    if (switchState == HIGH) {
-//      mouseIsActive = !mouseIsActive;
-//      // turn on LED to indicate mouse state:
-//      digitalWrite(ledPin, mouseIsActive);
-//    }
-//  }
-//  // save switch state for next comparison:
-//  lastSwitchState = switchState;
-
   // read and scale the two axes:
   int xReading = xreadAxis(A0);
   int yReading = yreadAxis(A1);
@@ -110,18 +92,9 @@ void loop() {
       btn_state = btn_read_state;
       btn_last_action_time = btn_current_action_time;
       if(btn_state == HIGH) {
-        Serial.print("button_release");
-
-//        digitalWrite(white_led_pin, HIGH);
-//        Mouse.release();
         Mouse.release(MOUSE_LEFT);
-//        Mouse.release(MOUSE_RIGHT);
       } else {
-//        digitalWrite(white_led_pin, LOW);
-//        Mouse.press();
-        Serial.print("button_press");
         Mouse.press(MOUSE_LEFT);
-//        Mouse.press(MOUSE_RIGHT);
       }
     }
   }
@@ -132,34 +105,12 @@ void loop() {
        right_btn_state = right_btn_read_state;
        right_btn_last_action_time = right_btn_current_action_time;
        if(right_btn_state == HIGH) {
-//         digitalWrite(white_led_pin, HIGH);
- //        Mouse.release();
- //        Mouse.release(MOUSE_LEFT);
          Mouse.release(MOUSE_RIGHT);
        } else {
- //        digitalWrite(white_led_pin, LOW);
- //        Mouse.press();
- //        Mouse.press(MOUSE_LEFT);
          Mouse.press(MOUSE_RIGHT);
        }
      }
    }
-
-//  // read the mouse button and click or not click:
-//  // if the mouse button is pressed:
-//  if (digitalRead(mouseButton) == HIGH) {
-//    // if the mouse is not pressed, press it:
-//    if (!Mouse.isPressed(MOUSE_LEFT)) {
-//      Mouse.press(MOUSE_LEFT);
-//    }
-//  }
-//  // else the mouse button is not pressed:
-//  else {
-//    // if the mouse is pressed, release it:
-//    if (Mouse.isPressed(MOUSE_LEFT)) {
-//      Mouse.release(MOUSE_LEFT);
-//    }
-//  }
 
   delay(responseDelay);
 }
@@ -169,14 +120,12 @@ void loop() {
   from 0 to <range>
 */
 
-//int readAxis(int thisAxis) {
 int xreadAxis(int xReading) {
   // read the analog input:
   int reading = analogRead(xReading);
 
   // map the reading from the analog input range to the output range:
   reading = map(reading, 0, 1023, 0, range);
-//  reading = map(reading, 1023, 0, 0, range);
 
   // if the output reading is outside from the rest position threshold, use it:
   int distance = reading - center;
@@ -194,7 +143,6 @@ int yreadAxis(int yReading) {
   int reading = analogRead(yReading);
 
   // map the reading from the analog input range to the output range:
-//  reading = map(reading, 0, 1023, 0, range);
   reading = map(reading, 1023,0, 0, range);
 
   // if the output reading is outside from the rest position threshold, use it:
