@@ -38,7 +38,7 @@ const int ledPin = 5;         // Mouse control LED
 
 // parameters for reading the joystick:
 //int range = 12;               // output range of X or Y movement
-int range = 18;               // output range of X or Y movement
+int range = 30;               // output range of X or Y movement
 int responseDelay = 5;        // response delay of the mouse, in ms
 int threshold = range / 4;    // resting threshold
 int center = range / 2;       // resting position value
